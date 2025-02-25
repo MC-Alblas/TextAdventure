@@ -18,21 +18,29 @@ class Game
 	{
 		// Create the rooms
 		Room outside = new Room("outside the main entrance of the university");
+		Room mainHall = new Room("in the main hall");
+		Room secondFloor = new Room("on the second floor");		
 		Room theatre = new Room("in a lecture theatre");
 		Room pub = new Room("in the campus pub");
 		Room lab = new Room("in a computing lab");
 		Room office = new Room("in the computing admin office");
 
 		// Initialise room exits
-		outside.AddExit("east", theatre);
-		outside.AddExit("south", lab);
-		outside.AddExit("west", pub);
+		outside.AddExit("south", mainHall);
 
-		theatre.AddExit("west", outside);
+		mainHall.AddExit("west", pub);
+		mainHall.AddExit("east", theatre);
+		mainHall.AddExit("south", lab);
+		mainHall.AddExit("up", secondFloor);
+		mainHall.AddExit("north", outside);		
 
-		pub.AddExit("east", outside);
+		secondFloor.AddExit("down", mainHall);
 
-		lab.AddExit("north", outside);
+		theatre.AddExit("west", mainHall);
+
+		pub.AddExit("east", mainHall);
+
+		lab.AddExit("north", mainHall);
 		lab.AddExit("east", office);
 
 		office.AddExit("west", lab);
