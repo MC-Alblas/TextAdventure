@@ -13,6 +13,8 @@ class CommandLibrary
 		validCommands.Add("help");
 		validCommands.Add("go");
 		validCommands.Add("quit");
+		validCommands.Add("look");
+
 	}
 
 	// Check whether a given string is a valid command word.
