@@ -111,6 +111,9 @@ class Game
 			case "look":
 				PrintLook();
 				break;
+			case "status":
+				PrintStatus();
+				break;
 		}
 
 		return wantToQuit;
@@ -129,6 +132,12 @@ class Game
 		Console.WriteLine();
 		// let the parser print the commands
 		parser.PrintValidCommands();
+	}
+
+	private void PrintStatus() 
+	{
+		int HP = player.GetHealth();
+		Console.WriteLine($"You have {HP}/100 health");
 	}
 
 	// Try to go to one direction. If there is an exit, enter the new
@@ -152,6 +161,7 @@ class Game
 			return;
 		}
 
+		player.Damage(5);
 		player.CurrentRoom = nextRoom;
 		Console.WriteLine(player.CurrentRoom.GetLongDescription());
 	}
