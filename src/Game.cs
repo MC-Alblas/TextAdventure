@@ -46,10 +46,13 @@ class Game
 
 		office.AddExit("west", lab);
 
-		// Create your Items here
-		// ...
+		// Create Items
+		Item medkit = new Item(10, "a medkit");
+		Item blade = new Item(5, "the pristine blade");
+		Item snack = new Item(5, "an abandoned and untouched snack");
+
 		// And add them to the Rooms
-		// ...
+
 
 		// Start game outside
 		player.CurrentRoom = outside;
@@ -75,6 +78,7 @@ class Game
 				finished = true;
 			}
 		}
+
 		Console.WriteLine("Thank you for playing.");
 		Console.WriteLine("Press [Enter] to continue.");
 		Console.ReadLine();
@@ -168,7 +172,7 @@ class Game
 			return;
 		}
 
-		player.Damage(25);
+		player.Damage(5);
 		player.CurrentRoom = nextRoom;
 		Console.WriteLine(player.CurrentRoom.GetLongDescription());
 	}
