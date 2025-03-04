@@ -67,6 +67,13 @@ class Game
 		{
 			Command command = parser.GetCommand();
 			finished = ProcessCommand(command);
+			
+			if(!player.IsAlive()) {
+				Console.WriteLine();
+				Console.WriteLine("You died.");
+				Console.WriteLine();
+				finished = true;
+			}
 		}
 		Console.WriteLine("Thank you for playing.");
 		Console.WriteLine("Press [Enter] to continue.");
@@ -157,11 +164,11 @@ class Game
 		Room nextRoom = player.CurrentRoom.GetExit(direction);
 		if (nextRoom == null)
 		{
-			Console.WriteLine("There is no door to " + direction + "!");
+			Console.WriteLine("There is no door to the " + direction + "!");
 			return;
 		}
 
-		player.Damage(5);
+		player.Damage(25);
 		player.CurrentRoom = nextRoom;
 		Console.WriteLine(player.CurrentRoom.GetLongDescription());
 	}
