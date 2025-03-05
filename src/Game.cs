@@ -52,7 +52,9 @@ class Game
 		Item snack = new Item(5, "an abandoned and untouched snack");
 
 		// And add them to the Rooms
-
+		secondFloor.AddItem(medkit);
+		theatre.AddItem(blade);
+		office.AddItem(snack);
 
 		// Start game outside
 		player.CurrentRoom = outside;
@@ -179,6 +181,6 @@ class Game
 
 	private void PrintLook()
 	{
-		Console.WriteLine(player.CurrentRoom.GetLongDescription());
+		Console.WriteLine(player.CurrentRoom.GetShortDescription());
 	}
 }
