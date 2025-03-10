@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 
 class Game
 {
@@ -127,6 +128,11 @@ class Game
 			case "status":
 				PrintStatus();
 				break;
+			case "take":
+				take(command);
+				break;
+			case "drop":
+				break;
 		}
 
 		return wantToQuit;
@@ -183,4 +189,10 @@ class Game
 	{
 		Console.WriteLine(player.CurrentRoom.GetShortDescription());
 	}
+
+	private void take(Command item) 
+	{
+
+	}
 }
+
