@@ -1,16 +1,20 @@
 class Inventory
 {
     // fields
-    private int maxWeight;
+    private int maxSpace;
+    private int spaceLeft;
     private Dictionary<string, Item> items;
+
     // constructor
-    public Inventory(int maxWeight)
+    public Inventory(int maxSpace)
     {
-        this.maxWeight = maxWeight;
+        this.maxSpace = maxSpace;
+        this.spaceLeft = maxSpace;
         items = new Dictionary<string, Item>();
     }
+
     // methods
-    public void Put(string itemName, Item item)
+    public bool Put(string itemName, Item item)
     {
         // TODO implement:
         // Check the Weight of the Item and check
@@ -19,16 +23,33 @@ class Inventory
         // Put Item in the items Dictionary
         // Return true/false for success/failure
 
-        items.Add(itemName, item);
-        // return false;
+        if (spaceLeft < item.Size)
+        {
+            return false;
+        }
+        else
+        {
+            items.Add(itemName, item);
+            spaceLeft = -item.Size;
+            return true;
+        }
     }
-    public Item Get(string itemName)
+
+    public Item Get(string itemName, Item item)
     {
         // TODO implement:
         // Find Item in items Dictionary
         // remove Item from items Dictionary if found
         // return Item or null
 
-        return null;
+        if (items.ContainsKey(itemName))
+        {
+            items.Remove(itemName);
+            return item;
+        }
+        else
+        {
+            return null;
+        }
     }
 }

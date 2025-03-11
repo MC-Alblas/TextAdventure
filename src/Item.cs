@@ -1,12 +1,12 @@
 class Item
 {
     // fields
-    public int Weight { get; }
+    public int Size { get; }
     public string Description { get; }
     // constructor
-    public Item(int weight, string description)
+    public Item(int size, string description)
     {
-        Weight = weight;
+        Size = size;
         Description = description;
     }
 }

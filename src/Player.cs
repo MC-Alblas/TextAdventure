@@ -9,6 +9,7 @@ class Player
     {
         CurrentRoom = null;
         health = 100;
+        Inventory backPack = new Inventory(50);
     }
 
     public int GetHealth() {

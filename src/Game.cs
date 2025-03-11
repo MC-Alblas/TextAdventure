@@ -49,13 +49,13 @@ class Game
 
 		// Create Items
 		Item medkit = new Item(10, "a medkit");
-		Item blade = new Item(5, "the pristine blade");
+		Item blade = new Item(20, "the pristine blade");
 		Item snack = new Item(5, "an abandoned and untouched snack");
 
 		// And add them to the Rooms
-		secondFloor.AddItem(medkit);
-		theatre.AddItem(blade);
-		office.AddItem(snack);
+		// secondFloor.AddItem(medkit);
+		// theatre.AddItem(blade);
+		// office.AddItem(snack);
 
 		// Start game outside
 		player.CurrentRoom = outside;
