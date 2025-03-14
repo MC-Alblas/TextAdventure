@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 class Game
 {
@@ -53,9 +54,9 @@ class Game
 		Item snack = new Item(5, "an abandoned and untouched snack");
 
 		// And add them to the Rooms
-		// secondFloor.AddItem(medkit);
-		// theatre.AddItem(blade);
-		// office.AddItem(snack);
+		secondFloor.AddItem("medkit", medkit);
+		theatre.AddItem("pristine blade", blade);
+		office.AddItem("snack", snack);
 
 		// Start game outside
 		player.CurrentRoom = outside;
@@ -132,6 +133,7 @@ class Game
 				take(command);
 				break;
 			case "drop":
+				drop(command);
 				break;
 		}
 
@@ -190,9 +192,33 @@ class Game
 		Console.WriteLine(player.CurrentRoom.GetShortDescription());
 	}
 
-	private void take(Command item) 
+	private void take(Command command) 
 	{
+		if(!command.HasSecondWord()) {
+			Console.WriteLine("Take what?");
+			return;
+		}
 
+		string itemName = command.SecondWord;
+		Item item = player.CurrentRoom.chest.Get(itemName);
+
+		player.backPack.Put(itemName, item);
+		Console.WriteLine($"you take {item.Description}");
+		Console.WriteLine($"you have {player.backPack.spaceLeft} / {player.backPack.maxSpace} left");
+	}
+
+	private void drop(Command command) 
+	{
+		if(!command.HasSecondWord()) {
+			Console.WriteLine("Drop what?");
+			return;
+		}
+
+		string itemName = command.SecondWord;
+		Item item = player.backPack.Get(itemName);
+
+		player.CurrentRoom.chest.Put(itemName, item);
+		Console.WriteLine($"You put {item.Description} in the chest");
 	}
 }
 

@@ -1,8 +1,8 @@
 class Inventory
 {
     // fields
-    private int maxSpace;
-    private int spaceLeft;
+    public int maxSpace { get; }
+    public int spaceLeft { get; set; }
     private Dictionary<string, Item> items;
 
     // constructor
@@ -35,7 +35,7 @@ class Inventory
         }
     }
 
-    public Item Get(string itemName, Item item)
+    public Item Get(string itemName)
     {
         // TODO implement:
         // Find Item in items Dictionary
@@ -45,6 +45,7 @@ class Inventory
         if (items.ContainsKey(itemName))
         {
             items.Remove(itemName);
+            Item item = items[itemName];
             return item;
         }
         else

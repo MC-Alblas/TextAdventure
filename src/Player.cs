@@ -3,13 +3,14 @@ class Player
     // auto property
     public Room CurrentRoom { get; set; }
     private int health;
+    public Inventory backPack;
 
     // constructor
     public Player()
     {
         CurrentRoom = null;
         health = 100;
-        Inventory backPack = new Inventory(50);
+        backPack = new Inventory(50);
     }
 
     public int GetHealth() {
