@@ -30,7 +30,7 @@ class Inventory
         else
         {
             items.Add(itemName, item);
-            spaceLeft = -item.Size;
+            spaceLeft -= item.Size;
             return true;
         }
     }
@@ -44,8 +44,8 @@ class Inventory
 
         if (items.ContainsKey(itemName))
         {
-            items.Remove(itemName);
             Item item = items[itemName];
+            items.Remove(itemName);
             return item;
         }
         else
