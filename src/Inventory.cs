@@ -53,4 +53,12 @@ class Inventory
             return null;
         }
     }
+
+    public void listInventory()
+    {
+        		foreach(var key in items.Keys) {
+                    Console.WriteLine(key);
+                }
+
+    }
 }

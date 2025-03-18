@@ -161,7 +161,9 @@ class Game
 		int HP = player.GetHealth();
 		Console.WriteLine($"You have {HP}/100 health");
 		Console.WriteLine($"you have {player.backPack.spaceLeft} out of {player.backPack.maxSpace} space left in your backpack");
-
+		Console.WriteLine("");
+		Console.WriteLine("Your inventory:");
+		player.backPack.listInventory();
 	}
 
 	// Try to go to one direction. If there is an exit, enter the new
