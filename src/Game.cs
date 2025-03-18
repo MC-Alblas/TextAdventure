@@ -136,6 +136,9 @@ class Game
 			case "drop":
 				drop(command);
 				break;
+			case "use":
+				
+				break;
 		}
 
 		return wantToQuit;
@@ -229,6 +232,19 @@ class Game
 		player.CurrentRoom.chest.Put(itemName, item);
 		Console.WriteLine($"You put {item.Description} in the chest");
 		Console.WriteLine($"you have {player.backPack.spaceLeft} out of {player.backPack.maxSpace} space left in your backpack");
+	}
+
+	private void use(Command command)
+	{
+		if (!command.HasSecondWord())
+		{
+			Console.WriteLine("Use what?");
+			return;
+		}
+
+		string itemName = command.SecondWord;
+
+		
 	}
 }
 

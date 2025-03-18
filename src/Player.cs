@@ -13,7 +13,8 @@ class Player
         backPack = new Inventory(50);
     }
 
-    public int GetHealth() {
+    public int GetHealth()
+    {
         return health;
     }
 
@@ -29,11 +30,34 @@ class Player
         return health;
     }
 
-    public bool IsAlive() {
-        if(!(health <= 0)) {
+    public bool IsAlive()
+    {
+        if (!(health <= 0))
+        {
             return true;
-        } else {
+        }
+        else
+        {
             return false;
+        }
+    }
+
+    public string Use(string itemName)
+    {
+        Item item = backPack.Get(itemName);
+        string desc = item.Description;
+
+        switch(desc)
+        {
+            case "a medkit":
+
+                break;
+            case "the pristine blade":
+
+                break;
+            case "an abandoned and untouched snack":
+
+                break;
         }
     }
 }
