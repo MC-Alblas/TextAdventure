@@ -137,7 +137,7 @@ class Game
 				drop(command);
 				break;
 			case "use":
-				
+				use(command);
 				break;
 		}
 
@@ -244,7 +244,7 @@ class Game
 
 		string itemName = command.SecondWord;
 
-		
+		Console.WriteLine(player.UseItem(itemName));
 	}
 }
 
