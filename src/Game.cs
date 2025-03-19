@@ -1,7 +1,3 @@
-using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-
 class Game
 {
 	// Private fields
@@ -48,15 +44,19 @@ class Game
 
 		office.AddExit("west", lab);
 
+		office.SetLocked(true);
+
 		// Create Items
 		Item medkit = new Item(10, "a medkit");
 		Item blade = new Item(20, "the pristine blade");
 		Item snack = new Item(5, "an abandoned and untouched snack");
+		Item officeKey = new Item(10, "an office key", office);
 
 		// And add them to the Rooms
 		secondFloor.AddItem("medkit", medkit);
 		theatre.AddItem("pristine blade", blade);
 		office.AddItem("snack", snack);
+		pub.AddItem("key", officeKey);
 
 		// Start game outside
 		player.CurrentRoom = outside;
@@ -191,6 +191,7 @@ class Game
 
 		if (nextRoom.IsLocked())
 		{
+			Console.WriteLine("This room appears to be locked.");
 			return;
 		}
 
@@ -246,9 +247,7 @@ class Game
 			return;
 		}
 
-		string itemName = command.SecondWord;
-
-		Console.WriteLine(player.UseItem(itemName));
+		Console.WriteLine(player.UseItem(command));
 	}
 }
 
