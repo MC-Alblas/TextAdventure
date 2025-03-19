@@ -181,12 +181,16 @@ class Game
 		}
 
 		string direction = command.SecondWord;
-
-		// Try to go to the next room.
 		Room nextRoom = player.CurrentRoom.GetExit(direction);
+
 		if (nextRoom == null)
 		{
 			Console.WriteLine("There is no door to the " + direction + "!");
+			return;
+		}
+
+		if (nextRoom.IsLocked())
+		{
 			return;
 		}
 
