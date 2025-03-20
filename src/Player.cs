@@ -51,7 +51,6 @@ class Player
         string itemName = command.SecondWord;
         string target = command.ThirdWord;
         Item item = backPack.Get(itemName);
-        string desc = item.Description;
         string result = "";
 
         if (item == null)
@@ -75,7 +74,7 @@ class Player
                 break;
         }
 
-        backPack.spaceLeft += item.Size;
+        backPack.SpaceLeft += item.Size;
         return result;
     }
 

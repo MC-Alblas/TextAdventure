@@ -131,13 +131,13 @@ class Game
 				PrintStatus();
 				break;
 			case "take":
-				take(command);
+				Take(command);
 				break;
 			case "drop":
-				drop(command);
+				Drop(command);
 				break;
 			case "use":
-				use(command);
+				Use(command);
 				break;
 		}
 
@@ -163,10 +163,10 @@ class Game
 	{
 		int HP = player.GetHealth();
 		Console.WriteLine($"You have {HP}/100 health");
-		Console.WriteLine($"you have {player.backPack.spaceLeft} out of {player.backPack.maxSpace} space left in your backpack");
+		Console.WriteLine($"you have {player.backPack.SpaceLeft} out of {player.backPack.MaxSpace} space left in your backpack");
 		Console.WriteLine("");
 		Console.WriteLine("Your inventory:");
-		player.backPack.listInventory();
+		player.backPack.ListInventory();
 	}
 
 	// Try to go to one direction. If there is an exit, enter the new
@@ -202,11 +202,29 @@ class Game
 
 	private void PrintLook()
 	{
-		Console.WriteLine(player.CurrentRoom.GetShortDescription());
-		// Console.WriteLine($"There is {}");
+		Console.WriteLine(player.CurrentRoom.GetLongDescription());
+		Console.WriteLine("");
+		Inventory chest = player.CurrentRoom.chest;
+		if(chest.IsEmpty())
+		{
+			Console.WriteLine("There are no items in this room.");
+		}
+		else
+		{
+			if(chest.IsMultiple())
+			{
+			Console.WriteLine("You see multiple items laying around this room:");
+			chest.ListInventory();
+			}
+			else
+			{
+				Console.WriteLine("You see an item in this room:");
+				chest.ListInventory();
+			}
+		}
 	}
 
-	private void take(Command command)
+	private void Take(Command command)
 	{
 		if (!command.HasSecondWord())
 		{
@@ -219,10 +237,10 @@ class Game
 
 		player.backPack.Put(itemName, item);
 		Console.WriteLine($"you take {item.Description}");
-		Console.WriteLine($"you have {player.backPack.spaceLeft} out of {player.backPack.maxSpace} space left in your backpack");
+		Console.WriteLine($"you have {player.backPack.SpaceLeft} out of {player.backPack.MaxSpace} space left in your backpack");
 	}
 
-	private void drop(Command command)
+	private void Drop(Command command)
 	{
 		if (!command.HasSecondWord())
 		{
@@ -233,13 +251,13 @@ class Game
 		string itemName = command.SecondWord;
 		Item item = player.backPack.Get(itemName);
 
-		player.backPack.spaceLeft += item.Size;
+		player.backPack.SpaceLeft += item.Size;
 		player.CurrentRoom.chest.Put(itemName, item);
 		Console.WriteLine($"You put {item.Description} in the chest");
-		Console.WriteLine($"you have {player.backPack.spaceLeft} out of {player.backPack.maxSpace} space left in your backpack");
+		Console.WriteLine($"you have {player.backPack.SpaceLeft} out of {player.backPack.MaxSpace} space left in your backpack");
 	}
 
-	private void use(Command command)
+	private void Use(Command command)
 	{
 		if (!command.HasSecondWord())
 		{
