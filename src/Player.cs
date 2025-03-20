@@ -1,9 +1,12 @@
+using System.ComponentModel;
+
 class Player
 {
     // auto property
     public Room CurrentRoom { get; set; }
     private int health;
     public Inventory backPack;
+    private bool UsedTheBlade;
 
     // constructor
     public Player()
@@ -11,6 +14,7 @@ class Player
         CurrentRoom = null;
         health = 100;
         backPack = new Inventory(50);
+        UsedTheBlade = false;
     }
 
     public int GetHealth()
@@ -46,16 +50,21 @@ class Player
         }
     }
 
+    public bool UsedBlade()
+    {
+        return UsedTheBlade;
+    }
+
     public string UseItem(Command command)
     {
         string itemName = command.SecondWord;
         string target = command.ThirdWord;
-        Item item = backPack.Get(itemName);
+        Item item = backPack.GetItem(itemName);
         string result = "";
 
-        if (item == null)
+        if (item == null && itemName != "telephone")
         {
-            return $"you don't have {itemName}.";
+            return $"you don't have a {itemName}.";
         }
 
         switch (itemName)
@@ -63,7 +72,7 @@ class Player
             case "medkit":
                 result = UseMedkit();
                 break;
-            case "pristine blade":
+            case "blade":
                 result = UseBlade();
                 break;
             case "snack":
@@ -72,9 +81,16 @@ class Player
             case "key":
                 result = UseKey(target, item);
                 break;
+            case "telephone":
+                result = UseTelephone();
+                break;
         }
 
+        if (itemName != "telephone")
+        {
+        backPack.Remove(itemName);
         backPack.SpaceLeft += item.Size;
+        }
         return result;
     }
 
@@ -87,7 +103,8 @@ class Player
     private string UseBlade()
     {
         Damage(10);
-        return "you used the blade and ended up hurting yourself for 10 health. You decide to drop the blade.";
+        UsedTheBlade = true;
+        return "you used the pristine blade and ended up hurting yourself for 10 health. Since you clearly don't know how to use it, you decide to drop the blade.";
     }
 
     private string UseSnack()
@@ -116,6 +133,20 @@ class Player
         }
 
         targetRoom.SetLocked(false);
-        return "you used to key on the door. It's now unlocked.";
+        return "you used the key on the door. It's now unlocked.";
+    }
+
+    private string UseTelephone()
+    {
+        Item telephone = CurrentRoom.chest.GetItem("telephone");
+        if(telephone == null)
+        {
+            return "There is no telephone in this room.";
+        }
+        else
+        {
+
+            return "You dial 112 to call an ambulance. You should make your way outside to be taken in.";
+        }
     }
 }

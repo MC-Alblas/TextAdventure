@@ -47,16 +47,18 @@ class Game
 		office.SetLocked(true);
 
 		// Create Items
-		Item medkit = new Item(10, "a medkit");
-		Item blade = new Item(20, "the pristine blade");
-		Item snack = new Item(5, "an abandoned and untouched snack");
-		Item officeKey = new Item(10, "an office key", office);
+		Item medkit = new Item(10, "a medkit", true);
+		Item blade = new Item(20, "the pristine blade", true);
+		Item snack = new Item(5, "an abandoned and untouched snack", true);
+		Item officeKey = new Item(10, "the office key", true, office);
+		Item telephone = new Item(0, "a telephone", false);
 
 		// And add them to the Rooms
 		secondFloor.AddItem("medkit", medkit);
-		theatre.AddItem("pristine blade", blade);
+		theatre.AddItem("blade", blade);
 		office.AddItem("snack", snack);
 		pub.AddItem("key", officeKey);
+		office.AddItem("telephone", telephone);
 
 		// Start game outside
 		player.CurrentRoom = outside;
@@ -195,7 +197,15 @@ class Game
 			return;
 		}
 
-		player.Damage(5);
+		if (player.UsedBlade())
+		{
+			player.Damage(10);
+		}
+		else
+		{
+			player.Damage(5);
+		}
+
 		player.CurrentRoom = nextRoom;
 		Console.WriteLine(player.CurrentRoom.GetLongDescription());
 	}
@@ -205,16 +215,16 @@ class Game
 		Console.WriteLine(player.CurrentRoom.GetLongDescription());
 		Console.WriteLine("");
 		Inventory chest = player.CurrentRoom.chest;
-		if(chest.IsEmpty())
+		if (chest.IsEmpty())
 		{
 			Console.WriteLine("There are no items in this room.");
 		}
 		else
 		{
-			if(chest.IsMultiple())
+			if (chest.IsMultiple())
 			{
-			Console.WriteLine("You see multiple items laying around this room:");
-			chest.ListInventory();
+				Console.WriteLine("You see multiple items laying around this room:");
+				chest.ListInventory();
 			}
 			else
 			{
@@ -233,8 +243,15 @@ class Game
 		}
 
 		string itemName = command.SecondWord;
-		Item item = player.CurrentRoom.chest.Get(itemName);
+		Item item = player.CurrentRoom.chest.GetItem(itemName);
 
+		if (!item.CanBePickedUp)
+		{
+			Console.WriteLine("That cannot be picked up");
+			return;
+		}
+
+		player.CurrentRoom.chest.Remove(itemName);
 		player.backPack.Put(itemName, item);
 		Console.WriteLine($"you take {item.Description}");
 		Console.WriteLine($"you have {player.backPack.SpaceLeft} out of {player.backPack.MaxSpace} space left in your backpack");
@@ -249,11 +266,12 @@ class Game
 		}
 
 		string itemName = command.SecondWord;
-		Item item = player.backPack.Get(itemName);
+		Item item = player.backPack.GetItem(itemName);
+		player.backPack.Remove(itemName);
 
 		player.backPack.SpaceLeft += item.Size;
 		player.CurrentRoom.chest.Put(itemName, item);
-		Console.WriteLine($"You put {item.Description} in the chest");
+		Console.WriteLine($"You put {item.Description} down");
 		Console.WriteLine($"you have {player.backPack.SpaceLeft} out of {player.backPack.MaxSpace} space left in your backpack");
 	}
 

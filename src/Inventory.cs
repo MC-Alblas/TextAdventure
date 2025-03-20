@@ -35,17 +35,24 @@ class Inventory
         }
     }
 
-    public Item Get(string itemName)
+    public void Remove(string itemName)
     {
-        // TODO implement:
-        // Find Item in items Dictionary
-        // remove Item from items Dictionary if found
-        // return Item or null
+        if (!Items.ContainsKey(itemName))
+        {
+            return;
+        }
+        else
+        {
+            Items.Remove(itemName);
+        }
 
+    }
+
+    public Item GetItem(string itemName)
+    {
         if (Items.ContainsKey(itemName))
         {
             Item item = Items[itemName];
-            Items.Remove(itemName);
             return item;
         }
         else
