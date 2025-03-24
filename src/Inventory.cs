@@ -61,13 +61,14 @@ class Inventory
         }
     }
 
-    public void ListInventory()
+    public string ListInventory()
     {
         foreach (var key in Items.Keys)
         {
-            Console.WriteLine(key);
+            // Console.WriteLine(key);
+            return key;
         }
-
+        return "";
     }
 
     public bool IsEmpty()

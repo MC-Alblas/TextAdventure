@@ -1,5 +1,3 @@
-using System.ComponentModel;
-
 class Player
 {
     // auto property
@@ -7,6 +5,8 @@ class Player
     private int health;
     public Inventory backPack;
     private bool UsedTheBlade;
+    private bool CalledAnAmbulance;
+    public bool Won { get; set; }
 
     // constructor
     public Player()
@@ -15,6 +15,8 @@ class Player
         health = 100;
         backPack = new Inventory(50);
         UsedTheBlade = false;
+        CalledAnAmbulance = false;
+        Won = false;
     }
 
     public int GetHealth()
@@ -53,6 +55,11 @@ class Player
     public bool UsedBlade()
     {
         return UsedTheBlade;
+    }
+
+    public bool CalledAmbulance()
+    {
+        return CalledAnAmbulance;
     }
 
     public string UseItem(Command command)
@@ -145,7 +152,7 @@ class Player
         }
         else
         {
-
+            CalledAnAmbulance = true;
             return "You dial 112 to call an ambulance. You should make your way outside to be taken in.";
         }
     }

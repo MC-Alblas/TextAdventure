@@ -1,3 +1,5 @@
+using System.Security.Cryptography.X509Certificates;
+
 class Game
 {
 	// Private fields
@@ -84,6 +86,12 @@ class Game
 				Console.WriteLine();
 				finished = true;
 			}
+
+			if (player.Won == true)
+			{
+				PrintWon();
+				finished = true;
+			}
 		}
 
 		Console.WriteLine("Thank you for playing.");
@@ -100,6 +108,15 @@ class Game
 		Console.WriteLine("Type 'help' if you need help.");
 		Console.WriteLine();
 		Console.WriteLine(player.CurrentRoom.GetLongDescription());
+	}
+
+	private void PrintWon()
+	{
+		Console.WriteLine();
+		Console.WriteLine("The ambulance you called is waiting for you.");
+		Console.WriteLine("You are helped inside and driven to the hospital where your wounds are treated.");
+		Console.WriteLine();
+		Console.WriteLine("You beat the game!");
 	}
 
 	// Given a command, process (that is: execute) the command.
@@ -168,7 +185,7 @@ class Game
 		Console.WriteLine($"you have {player.backPack.SpaceLeft} out of {player.backPack.MaxSpace} space left in your backpack");
 		Console.WriteLine("");
 		Console.WriteLine("Your inventory:");
-		player.backPack.ListInventory();
+		Console.WriteLine(player.backPack.ListInventory());
 	}
 
 	// Try to go to one direction. If there is an exit, enter the new
@@ -208,6 +225,11 @@ class Game
 
 		player.CurrentRoom = nextRoom;
 		Console.WriteLine(player.CurrentRoom.GetLongDescription());
+
+		if (player.CalledAmbulance() && nextRoom.GetShortDescription() == "outside the main entrance of the university")
+		{
+			player.Won = true;
+		}
 	}
 
 	private void PrintLook()
